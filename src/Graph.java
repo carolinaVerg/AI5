@@ -19,11 +19,11 @@ public class Graph {
 	}
 	
 	
-	public void addEdge(int vertice1Id,int vertice2Id, int weight) {
+	public void addEdge(int vertice1Id,int vertice2Id, int weight, double bProbability, int blocked) {
 		Vertex v1=Vertices.get(vertice1Id);
 		Vertex v2=Vertices.get(vertice2Id);
-		v1.addEdge(weight, v2);
-		v2.addEdge(weight, v1);
+		v1.addEdge(weight, v2,  bProbability,  blocked);
+		v2.addEdge(weight, v1, bProbability, blocked);
 	}
 	
 	public void removeEdge(int vId1, int vId2){

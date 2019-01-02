@@ -2,16 +2,12 @@
 public class Action {
 	private int deadline;
 	private int peopleSaved;
-	private Vertex vertexLocation;
-	private Vertex EdgeToBlock;
-	private int peopleOnCurrV;
+	private int vertexLocation;
 	
-	public Action(int deadline,int peopleSaved, Vertex vlocation) {
+	public Action(int deadline,int peopleSaved, int vlocation) {
 		this.deadline = deadline;
 		this.peopleSaved = peopleSaved;
 		this.vertexLocation = vlocation;
-//		this.EdgeToBlock = EdgeToBlock;
-//		this.peopleOnCurrV = peopleOnCurrV;
 	}
 ///////////////////////////////// UPDATE GETERS SETERS!!!! /////////////////////////////////
 
@@ -31,28 +27,12 @@ public class Action {
 		this.peopleSaved = peopleSaved;
 	}
 
-	public Vertex getVertexLocation() {
+	public int getVertexLocation() {
 		return vertexLocation;
 	}
 
-	public void setVertexLocation(Vertex vertexLocation) {
+	public void setVertexLocation(int vertexLocation) {
 		this.vertexLocation = vertexLocation;
-	}
-
-	public Vertex getEdgeToBlock() {
-		return EdgeToBlock;
-	}
-
-	public void setEdgeToBlock(Vertex edgeToBlock) {
-		EdgeToBlock = edgeToBlock;
-	}
-
-	public int getPeopleOnCurrV() {
-		return peopleOnCurrV;
-	}
-
-	public void setPeopleOnCurrV(int peopleOnCurrV) {
-		this.peopleOnCurrV = peopleOnCurrV;
 	}
 }
 

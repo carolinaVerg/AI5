@@ -7,7 +7,8 @@ public class Vertex {
 	private int People;
 	private boolean IsShelter;
 	private int Id;
-	private LinkedList<Pair> Edges;
+	private LinkedList<Edge> Edges;
+	
 
 	public Vertex(int people,boolean isShelter, int id) {
 		this.People=people;
@@ -15,6 +16,7 @@ public class Vertex {
 		this.Id=id;
 		this.Edges= new LinkedList<>();
 	}
+	
 	
 	public static LinkedList<Vertex>verticesDeepCopy(LinkedList<Vertex> vertices){
 		 LinkedList<Vertex> newVertices=new LinkedList<>();
@@ -27,14 +29,15 @@ public class Vertex {
 			 newVertices.add(newVer);
 		 }
 		 Iterator<Vertex> newVerIter=newVertices.listIterator(0);
-		 Iterator<Pair> edgeIter;
+		 Iterator<Edge> edgeIter;
 		 while(newVerIter.hasNext()) {
 			 curentVer=newVerIter.next();
 			 edgeIter=vertices.get(curentVer.getId()-1).getEdges().listIterator(0);
-			 Pair currentEdge;
+			 Edge currentEdge;
 			 while(edgeIter.hasNext()) {
 				currentEdge=edgeIter.next();
-				curentVer.addEdge(currentEdge.getWeight(),newVertices.get(currentEdge.getVertex().Id-1));
+				curentVer.addEdge(currentEdge.getWeight(),
+						newVertices.get(currentEdge.getVertex().Id-1), currentEdge.getbProbability(), currentEdge.getBlocked());
 			 }
 		 }
 		 return newVertices;
@@ -42,13 +45,13 @@ public class Vertex {
 	
 	
 	
-	public void addEdge(int weight, Vertex v) {
-		Edges.add(new Pair(v, weight));
+	public void addEdge(int weight, Vertex v, double bProbability, int blocked) {
+		Edges.add(new Edge(v, weight, bProbability, blocked));
 	}
 	
 	public void removeEdgeById(int id) {
-		Iterator<Pair> iter=Edges.listIterator(0);
-		Pair current;
+		Iterator<Edge> iter=Edges.listIterator(0);
+		Edge current;
 		while (iter.hasNext()) {
 			current=iter.next();
 			if(current.getVertex().Id==id)
@@ -82,12 +85,12 @@ public class Vertex {
 		Id = id;
 	}
 
-	public LinkedList<Pair> getEdges() {
+	public LinkedList<Edge> getEdges() {
 		return Edges;
 	}
 
 	public Vertex getNeighborByVid(int vId){
-		Iterator<Pair> edgeIter = Edges.listIterator(0);
+		Iterator<Edge> edgeIter = Edges.listIterator(0);
 		while(edgeIter.hasNext()) {
 			Vertex v = edgeIter.next().getVertex();
 			if(v.getId() == vId){
@@ -97,8 +100,8 @@ public class Vertex {
 		return null;
 	}
 	public int getEdgeWeight(int vId){
-		Iterator<Pair> iter= getEdges().listIterator(0);
-		Pair currentEdge;
+		Iterator<Edge> iter= getEdges().listIterator(0);
+		Edge currentEdge;
 		while (iter.hasNext()) {
 			currentEdge = iter.next();
 			if(currentEdge.getVertex().getId() == vId){
@@ -107,7 +110,18 @@ public class Vertex {
 		}
 		return 0;
 	}
-	public void setEdges(LinkedList<Pair> edges) {
+	public Edge getEdge(int vId) {
+		Iterator<Edge> iter= getEdges().listIterator(0);
+		Edge currentEdge;
+		while (iter.hasNext()) {
+			currentEdge = iter.next();
+			if(currentEdge.getVertex().getId() == vId){
+				return currentEdge;
+			}
+		}
+		return null;
+	}
+	public void setEdges(LinkedList<Edge> edges) {
 		Edges = edges;
 	}
 	
