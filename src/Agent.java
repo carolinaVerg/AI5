@@ -12,7 +12,7 @@ public class Agent {
     public Action agentFunc() {
     	double maxUtility= Integer.MIN_VALUE;
     	BeliefState bestNextState=State;
-    	for(Edge action: State.getVertices().get(State.getLocation()).getEdges()) {
+    	for(Edge action: main.world.getVertices().get(State.getLocation()-1).getEdges()) {
 			if(action.getBlocked()==-1) {
 				for(BeliefState b: this.State.getSuccBStates()) {
 					if(b.getLocation()==action.getVertex().getId())

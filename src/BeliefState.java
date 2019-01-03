@@ -87,7 +87,11 @@ public class BeliefState {
 
     public double findBestPolices() {
         double maxValue = Integer.MIN_VALUE;
-        double reward = this.getPeopleSaved();
+        double reward ;
+        if(this.isGoalState())
+            reward=this.getPeopleSaved();
+        else
+            reward=0;
         double sumOfUtilities;
         for (Edge action : vertices.get(locationId-1).getEdges()) {
             sumOfUtilities = 0;
@@ -113,8 +117,6 @@ public class BeliefState {
                 maxValue = sumOfUtilities;
         }
         this.utility = reward + maxValue;
-        System.out.println("the utility of state: location:"+this.locationId+
-                "\ndeadline:"+this.deadLine+"people saved:"+this.getPeopleSaved()+ "is:"+this.utility);
         return this.utility;
     }
 

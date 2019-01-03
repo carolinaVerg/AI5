@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
 public class main {
     public static Graph world=null;
@@ -7,7 +8,7 @@ public class main {
   
 
 	public static void main(String[] args) {
-		File file = new File("C:\\univercity\\courses\\semester5\\intro to AI\\programming assignments\\AI5\\tests\\test1.txt"); //graph description
+		File file = new File("C:\\univercity\\courses\\semester5\\intro to AI\\programming assignments\\AI5\\tests\\test4.txt"); //graph description
         BufferedReader br = null;
 		String st = "";
 		world = initWorld(br,world,st,file);
@@ -65,16 +66,42 @@ public class main {
     }
 
     public static void simulator‬‬(Agent agent) {
+	    generateProbabilityWorld();
  		Action newAction;
  		while (world.getDeadLine() > 0 && world.getPeopleNotRescude()>0) {	
              newAction = agent.agentFunc();
              updateWorld(newAction);
+
              displayAgentInWorld(agent);
                      //display current state	
  		}
  		displayWorld(world);
  		// print world at end of deadline
      }
+
+    private static void generateProbabilityWorld() {
+	    for(Vertex ver: world.getVertices()){
+	        for(Edge e:ver.getEdges()){
+	            if(e.getBlocked()==0){
+	                int v1=ver.getId();
+	                int v2=e.getVertex().getId();
+	                double prob= 1/e.getbProbability();
+	                boolean blockegeVal=new Random().nextInt((int)prob)==0;
+	                if(blockegeVal){
+	                    e.setBlocked(1);
+	                    world.getVertices().get(e.getVertex().getId()-1).getEdge(ver.getId()).setBlocked(1);
+                        System.out.println("Edge(" + v1+","+v2+") - blocked");
+	                }
+                    else{
+                        e.setBlocked(-1);
+                        world.getVertices().get(e.getVertex().getId()-1).getEdge(ver.getId()).setBlocked(-1);
+                        System.out.println("Edge(" + v1+","+v2+") - Unblocked");
+	                }
+
+                }
+            }
+        }
+    }
 
     private static void displayAgentInWorld(Agent agent) {
         System.out.println("--------------------------------");
