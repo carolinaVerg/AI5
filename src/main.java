@@ -7,7 +7,7 @@ public class main {
   
 
 	public static void main(String[] args) {
-		File file = new File("/home/carolina/eclipse-workspace/AI2/tests/test3.txt"); //graph description
+		File file = new File("C:\\univercity\\courses\\semester5\\intro to AI\\programming assignments\\AI5\\tests\\test1.txt"); //graph description
         BufferedReader br = null;
 		String st = "";
 		world = initWorld(br,world,st,file);
@@ -22,7 +22,7 @@ public class main {
             br = new BufferedReader(new FileReader(file));
             try {
                 st = br.readLine();
-                world = new Graph(Integer.parseInt(st.split(" ")[1]));
+                world = new Graph(Integer.parseInt(st.split(" ")[1]));//number of ver
                 while ((st = br.readLine()) != null) {
                     String[] data = st.split(" ");
                     switch(data[0]){
