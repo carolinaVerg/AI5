@@ -52,7 +52,7 @@ public class BeliefState {
                             BeliefState toAdd = new BeliefState(locationIdNew, peopleSavedNew, peopleNotSavedNew, deadLineNew, Vertex.verticesDeepCopy(verticesNew), peopleOnNew);
                             this.getSuccBStates().add(toAdd);
                         } else {
-                            String binPer = String.format("%" + unknownBlock.size() + "d", Integer.parseInt(Integer.toBinaryString(i)));
+                            String binPer = String.format("%0" + unknownBlock.size() + "d", Integer.parseInt(Integer.toBinaryString(i)));
                             String[] binPerArr = binPer.split("");
                             for (int j = 0; j < unknownBlock.size(); j++) {
                                 Edge currentEdge = unknownBlock.get(j);
@@ -108,10 +108,13 @@ public class BeliefState {
                     }
                 }
             }
+
             if (maxValue < sumOfUtilities)
                 maxValue = sumOfUtilities;
         }
         this.utility = reward + maxValue;
+        System.out.println("the utility of state: location:"+this.locationId+
+                "\ndeadline:"+this.deadLine+"people saved:"+this.getPeopleSaved()+ "is:"+this.utility);
         return this.utility;
     }
 
