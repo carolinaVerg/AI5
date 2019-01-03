@@ -89,12 +89,23 @@ public class BeliefState {
         double maxValue = Integer.MIN_VALUE;
         double reward = this.getPeopleSaved();
         double sumOfUtilities;
-        for (Edge action : vertices.get(locationId).getEdges()) {
+        for (Edge action : vertices.get(locationId-1).getEdges()) {
             sumOfUtilities = 0;
             if (action.getBlocked() == -1) {
                 for (BeliefState b : this.getSuccBStates()) {
-                    if (b.getLocation() == action.getVertex().getId())
-                        sumOfUtilities = sumOfUtilities + b.findBestPolices() * (1 - action.getbProbability());
+                    if (b.getLocation() == action.getVertex().getId()) {
+                        double probability =1;
+                        for(Edge e: this.getVertices().get(b.getLocation()-1).getEdges()) {
+                            if (e.blocked == 0){
+                                if(b.getVertices().get(b.getLocation()-1).getEdge(e.getVertex().getId()).blocked==1){
+                                    probability=probability*e.getbProbability();
+                                }
+                                else
+                                    probability=probability*(1-e.getbProbability());
+                            }
+                        }
+                        sumOfUtilities=sumOfUtilities+b.findBestPolices()*probability;
+                    }
                 }
             }
             if (maxValue < sumOfUtilities)
